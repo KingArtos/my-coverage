@@ -1,6 +1,8 @@
 class PartnersController < ApplicationController
-  before_action :set_partner, only: [:show]
-  before_action :set_nearst, only: [:nearst]
+  include PartnersHelper
+
+  before_action :set_partner, only: :show
+  before_action :set_nearst, only: :nearst
 
   # GET /partners/nearst/-46.57421/-21.785741
   def nearst
@@ -14,12 +16,16 @@ class PartnersController < ApplicationController
 
   # POST /partners
   def create
-    @partner = Partner.new(partner_params)
+    with_valid_parameters(params) do |valid_params|
+ #   @partner = Partner.new(partner_params)
 
-    if @partner.save
-      render json: @partner, status: :created, location: @partner
-    else
-      render json: @partner.errors, status: :unprocessable_entity
+    render json: valid_params, status: :created
+
+#    if @partner.save
+#      render json: @partner, status: :created, location: @partner
+#    else
+#      render json: @partner.errors, status: :unprocessable_entity
+#    end
     end
   end
 
@@ -31,10 +37,5 @@ class PartnersController < ApplicationController
 
     def set_nearst
       @partner = Partner.find(params[:id])
-    end
-
-    # Only allow a trusted parameter "white list" through.
-    def partner_params
-      params.fetch(:partner, {})
     end
 end
