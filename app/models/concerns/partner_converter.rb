@@ -8,4 +8,8 @@ class PartnerConverter
       address: DECODER.decode(request[:address].to_json)
     })
   end
+
+  def self.geo_fields_encode(partner, fields)
+    fields.reduce({}) { |acc, field| acc.merge(field => DECODER.encode(partner[field])) }
+  end
 end
