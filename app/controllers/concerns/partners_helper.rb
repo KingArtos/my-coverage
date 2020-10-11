@@ -26,6 +26,6 @@ module PartnersHelper
     unless wrong_fields.empty?
       render json: { invalid_fields: wrong_fields }, status: :bad_request and return
     end
-    yield(parameters)
+    yield(parameters.permit!)
   end
 end

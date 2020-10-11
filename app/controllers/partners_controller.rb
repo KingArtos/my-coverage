@@ -17,7 +17,8 @@ class PartnersController < ApplicationController
   # POST /partners
   def create
     with_valid_parameters(params) do |valid_params|
- #   @partner = Partner.new(partner_params)
+
+    #partner = Partner.new(PartnerConverter.to_object(valid_params))
 
     render json: valid_params, status: :created
 
