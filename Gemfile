@@ -8,6 +8,7 @@ gem 'rails', '~> 6.0.3', '>= 6.0.3.4'
 
 gem 'activerecord-postgis-adapter'
 gem 'pg'
+gem 'rgeo-geojson'
 
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
