@@ -3,18 +3,14 @@ class PartnersController < ApplicationController
 
   # GET /partners/nearst/-46.57421/-21.785741
   def nearst
-    render json: {}
+    with_valid_coordinates(params[:lat].to_d, params[:long].to_d) do |lat, long|
+      render_find_flow(nil)
+    end
   end
 
   # GET /partners/1
   def show
-    partner = Partner.where(id: params[:id]).first
-
-    if partner
-      render json: Representers::PartnerResponse.to_json(partner)
-    else
-      render json: { error: "Partner not found" }, status: :not_found
-    end
+    render_find_flow(Partner.where(id: params[:id]).first)
   end
 
   # POST /partners
@@ -28,4 +24,13 @@ class PartnersController < ApplicationController
       end
     end
   end
+
+  private
+    def render_find_flow(partner)
+      if partner
+        render json: Representers::PartnerResponse.to_json(partner)
+      else
+        render json: { error: "Partner not found" }, status: :not_found
+      end
+    end
 end
