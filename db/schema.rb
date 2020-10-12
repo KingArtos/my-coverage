@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2020_10_10_182831) do
     t.string "owner_name", null: false
     t.string "document", null: false
     t.geometry "coverage_area", limit: {:srid=>4326, :type=>"multi_polygon"}, null: false
-    t.point "address", null: false
+    t.geography "address", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["coverage_area"], name: "index_partners_on_coverage_area", using: :gist
