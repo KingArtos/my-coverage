@@ -9,6 +9,10 @@ class PartnerConverter
     })
   end
 
+  def self.to_point(lat, long)
+    DECODER.decode({type: 'Point', coordinates: [lat, long]}.to_json)
+  end
+
   def self.geo_fields_encode(partner, fields)
     fields.reduce({}) { |acc, field| acc.merge(field => DECODER.encode(partner[field])) }
   end
