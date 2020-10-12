@@ -28,6 +28,7 @@ i chose some approaches that could be discutible:
 clone
 ```shell
 git clone git@github.com:KingArtos/my-coverage.git
+cd my-coverage
 ```
 
 docker run
@@ -35,6 +36,9 @@ docker run
 docker-compose build
 docker-compose up -d
 ```
+
+> image on docker hub: kingartos/ze_coverage_api
+
 
 To register a partner
 ```shell
