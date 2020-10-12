@@ -12,8 +12,11 @@ bundle exec rake db:create
 echo ">>> Migrating..."
 bundle exec rake db:migrate
 
-echo ">>> Seed..."
-bundle exec rake db:seed
+if [ $RAILS_ENV = "development" ]
+then
+  echo ">>> Seed..."
+  bundle exec rake db:seed
+fi
 
 # Then exec the container's main process (CMD).
 exec "$@"

@@ -2,6 +2,8 @@ FROM ruby:2.7.0-alpine
 
 RUN apk update && apk add bash build-base nodejs postgresql-dev tzdata
 
+ENV RAILS_ENV=development
+
 RUN mkdir /web
 WORKDIR /web
 
