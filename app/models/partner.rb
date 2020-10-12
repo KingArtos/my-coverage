@@ -1,4 +1,8 @@
 class Partner < ApplicationRecord
+  BASE_FIELDS = [:id, :trading_name, :owner_name, :document]
+  GEO_FIELDS = {coverage_area: 'MultiPolygon', address: 'Point'}
+  FIELDS = BASE_FIELDS + GEO_FIELDS.keys
+
   validates :id, :trading_name, :owner_name, :document, :coverage_area, :address, presence: true
   validates :id, :document, uniqueness: true
 
