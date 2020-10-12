@@ -10,14 +10,14 @@ default: &default
 
 development:
   <<: *default
-  database: my_coverage_development
+  database: partners_development
 
 test:
   <<: *default
-  database: my_coverage_test
+  database: partners_test
 
 production:
   <<: *default
-  database: my_coverage_production
+  database: partners_production
   username: <%= ENV.fetch("DATABASE_USERNAME") { "my_coverage_ze" } %>
   password: <%= ENV.fetch("DATABASE_PASSWORD") { "12345678" } %>
