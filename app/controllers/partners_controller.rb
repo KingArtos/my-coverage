@@ -3,8 +3,10 @@ class PartnersController < ApplicationController
 
   # GET /partners/nearst/-46.57421/-21.785741
   def nearst
-    with_valid_coordinates(params[:lat].to_d, params[:long].to_d) do |lat, long|
-      render_find_flow(nil)
+    with_valid_coordinates(params[:lat].to_f, params[:long].to_f) do |lat, long|
+      point = PartnerConverter.to_point(lat, long)
+      partner = Partner.nearst_in_coverage_by_point(point)
+      render_find_flow(partner.first)
     end
   end
 
