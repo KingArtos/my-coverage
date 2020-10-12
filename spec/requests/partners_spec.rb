@@ -93,7 +93,7 @@ RSpec.describe "/partners", type: :request do
   let(:outside_user_point) {
     {
       lat: -43.99,
-      long: -23.59
+      long: -23.61
     }
   }
 
@@ -103,11 +103,26 @@ RSpec.describe "/partners", type: :request do
         post partners_url, params: partner, as: :json
       end
     end
+    context "included in coverage area" do
+      it "renders a successful response" do
+        get "/partners/nearst/#{inside_user_point[:lat]}/#{inside_user_point[:long]}", as: :json
+        expect(response).to be_successful
+        expect(JSON.parse(response.body)).to eq(stringify_hash(valid_partner_nearst))
+      end
+    end
 
-    it "renders a successful response" do
-      get "/partners/nearst/#{inside_user_point[:lat]}/#{inside_user_point[:long]}", as: :json
-      expect(response).to be_successful
-      expect(JSON.parse(response.body)).to eq(stringify_hash(valid_partner_nearst))
+    context "not included in coverage area" do
+      it "renders not found as response" do
+        get "/partners/nearst/#{outside_user_point[:lat]}/#{outside_user_point[:long]}", as: :json
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context "invalid coordinates" do
+      it "renders bad request as response" do
+        get "/partners/nearst/90.01/30.45", as: :json
+        expect(response).to have_http_status(:bad_request)
+      end
     end
   end
 
@@ -125,7 +140,7 @@ RSpec.describe "/partners", type: :request do
     context "not included id" do
       let(:not_included_id) { valid_partner[:id] + valid_partner_nearst[:id] }
 
-      it "renders not found a successful response" do
+      it "renders not found as response" do
         get partner_url(not_included_id), as: :json
         expect(response).to have_http_status(:not_found)
       end

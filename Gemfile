@@ -26,6 +26,8 @@ group :development do
   gem 'listen', '~> 3.2'
 end
 
+gem 'simplecov', require: false, group: :test
+
 gem 'rspec-rails'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
